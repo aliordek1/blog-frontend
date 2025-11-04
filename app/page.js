@@ -1,66 +1,57 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// Bu bir Sunucu Bileşenidir (Server Component).
+// API isteğini sayfa yüklenmeden *önce* sunucuda yapacağız.
+// 'use client' KULLANMIYORUZ.
+import Link from 'next/link';
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+// API'den verileri çekecek asenkron fonksiyon
+async function getPosts() {
+  try {
+    // Backend API'mizden (3001) tüm yazıları çekiyoruz
+    const res = await fetch('http://localhost:3001/posts', {
+      // Önbellekleme (caching) yapma ki yeni yazıyı hemen görelim
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      throw new Error('API\'den veriler alınamadı');
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Fetch hatası:", error);
+    return []; // Hata olursa boş dizi döndür
+  }
 }
+
+// Anasayfa component'i artık 'async' (asenkron)
+export default async function HomePage() {
+
+  // Sayfa yüklenirken verileri çek
+  const posts = await getPosts();
+
+  return (
+    <main>
+      <h1>Blog Anasayfası</h1>
+
+      <Link href="/posts/new">
+        Yeni Yazı Oluştur
+      </Link>
+
+      <hr />
+
+      <h2>Yazılar</h2>
+      <ul>
+        {/* API'den gelen 'posts' dizisini map ile dönüp listeliyoruz */}
+        {posts.map((post) => (
+          <li key={post.id}>
+            {/* İŞTE TESTİMİZİN ARADIĞI BAŞLIK! */}
+            {post.title}
+          </li>
+        ))}
+
+        {/* Eğer hiç post yoksa mesaj göster */}
+        {posts.length === 0 && <p>Henüz hiç yazı yok.</p>}
+      </ul>
+
+    </main>
+  );
+}  
