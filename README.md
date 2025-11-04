@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Full-Stack Blog Projesi - Backend (Ruby on Rails API)
 
-## Getting Started
+Bu proje, BDD (Davranış Odaklı Geliştirme) ve TDD (Test Odaklı Geliştirme) metodolojileri kullanılarak geliştirilmiş bir blog uygulamasının backend API kısmıdır.
 
-First, run the development server:
+## Teknolojiler
+- Ruby on Rails 8
+- PostgreSQL
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Kurulum ve Çalıştırma
+1. `git clone https://github.com/aliordekl/blog-api.git`
+2. `cd blog-api`
+3. `bundle install`
+4. `rails db:create db:migrate`
+5. `rails s -p 3001`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Değerlendirme İçin
+Bu proje, **Nurettin Şenyer** ve **Ömer Durmuş** tarafından verilen ödev kapsamında geliştirilmiştir.
